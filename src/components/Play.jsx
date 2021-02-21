@@ -14,9 +14,10 @@ const Play = (props) => {
     socket.onAny((event, ...args) => {
       console.log(event, args);
     });
+
     socket.connect();
   }, [])
-  
+
   return (
       <div className="flex-container">
         <button type="button" className="nes-btn is-warning" onClick={props.history.goBack}>{"< Back"}</button>

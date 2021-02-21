@@ -31,25 +31,25 @@ const cannedData = [
     description: 'Solve a puzzle with additional people'
   },
   {
-    game_id: '12345',
+    game_id: '12325',
     title: 'Tanks',
     image_url: 'https://www.mobygames.com/images/shots/l/216847-a-collection-of-activision-classic-games-for-the-atari-2600.png',
     description: 'A great game to shoot your friends and such with'
   },
   {
-    game_id: '666666',
+    game_id: '666663',
     title: 'Maze',
     image_url: 'https://atariage.com/2600/screenshots/s_ET_2.png',
     description: 'Solve a puzzle with additional people'
   },
   {
-    game_id: '12343',
+    game_id: '12344',
     title: 'Tanks',
     image_url: 'https://www.mobygames.com/images/shots/l/216847-a-collection-of-activision-classic-games-for-the-atari-2600.png',
     description: 'A great game to shoot your friends and such with'
   },
   {
-    game_id: '666688',
+    game_id: '666488',
     title: 'Maze',
     image_url: 'https://atariage.com/2600/screenshots/s_ET_2.png',
     description: 'Solve a puzzle with additional people'
@@ -61,7 +61,7 @@ const cannedData = [
 
 const Home = (props) => {
   const renderedGameContainers = cannedData.map(({game_id, title, image_url}) => (
-    <div className="nes-container  with-title flex-center" style={{marginTop:'30px', width: '24%', height: '22vw', minWidth: '120px'}} onClick={() => changePage(props.history, `/game/${game_id}`)}>
+    <div key={game_id} className="nes-container  with-title flex-center" style={{marginTop:'30px', width: '24%', height: '22vw', minWidth: '120px'}} onClick={() => changePage(props.history, `/game/${game_id}`)}>
       <p className="title nes-text is-error">{title}</p>
       <img src={image_url} style={{width:'auto', height: 'auto', maxWidth: '100%', maxHeight: '100%'}} alt={`Thumbnail of ${title}`}/>
     </div>

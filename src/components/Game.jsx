@@ -58,7 +58,7 @@ const handleClick = (history) => {
   console.warn('here')
   fetch(`${URL}/create/maze`).then(r => {console.warn(r); return r.json()}).then(resp => {
     console.warn(resp);
-    history.push('/host/6969');
+    history.push(`/host/${resp.session_id}`);
   }).catch(e => console.warn(e))
 }
 

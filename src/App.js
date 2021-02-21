@@ -19,7 +19,7 @@ function App() {
     <Router>
       <Switch>
       <Route path="/developers" component={Developers}/>
-        <Route path="/host/:sessionId" component={Host}/>
+        <Route path="/host/:session_id" component={Host}/>
         <Route path="/game/:gameId" component={Game}/>
         <Route path="/play" component={Play}/>
         <Route path="/" component={Home}/>
