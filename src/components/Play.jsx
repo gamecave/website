@@ -9,10 +9,11 @@ console.warn('env', process.env.REACT_APP_DOLBY_KEY, process.env.REACT_APP_DOLBY
 
 
 const handleClick = (session_id) => {
-  socket.emit('join', {session_id});
+  socket.emit('join', {session_id, username: USERNAME});
 }
 
 let SESSION_ID = "";
+let USERNAME = "";
 
 const Play = (props) => {
   const [game_code, setGameCode] = useState("");
@@ -23,6 +24,7 @@ const Play = (props) => {
   const [error, setError] = useState(false);
 
   SESSION_ID = game_code;
+  USERNAME = username;
   useEffect(() => {
     socket.onAny((event, ...args) => {
       console.log(event, args);
@@ -62,7 +64,7 @@ const Play = (props) => {
     }
 
     return (
-      <div>
+      <div className="flex-center">
         {joinChat && <DolbyChat session_id={game_code} username={username}/>}
         {spectateGame && <GameView />}
         {comp}
@@ -147,7 +149,7 @@ const wasdsHandlerAdd = (event) => {
   }
 
   if (new_state.vertical !== wasds_last_state.vertical || new_state.horizontal !== wasds_last_state.horizontal || new_state.action !== wasds_last_state.action) {
-    socket.emit('send-input', {input_data: new_state, session_id: SESSION_ID})
+    socket.emit('send-input', {input_data: new_state, session_id: SESSION_ID, username: USERNAME})
   }
 
   wasds_last_state = new_state;
@@ -175,7 +177,7 @@ const wasdsHandlerSub = (event) => {
       break
   }
   console.warn(wasds_last_state)
-  socket.emit('send-input', {input_data: wasds_last_state, session_id: SESSION_ID})
+  socket.emit('send-input', {input_data: wasds_last_state, session_id: SESSION_ID, username: USERNAME})
 }
 
 const WASDS_INPUTTER = ({session_id, toggleRerender}) => {
@@ -220,7 +222,7 @@ const TEXT_SUBMIT_INPUTTER = ({session_id}) => {
           <label for="inline_field"></label>
           <input type="text" id="inline_field" className="nes-input is-success" placeholder="Type here.." onChange={(event) => setTextValue(event.target.value)}/>
         </div>
-        <button type="button" class="nes-btn is-primary" onClick={() => {console.warn("CLICK", text_value); socket.emit('send-input', {session_id, input_data: {text: text_value}})}}>SEND</button>
+        <button type="button" class="nes-btn is-primary" onClick={() => {console.warn("CLICK", text_value); socket.emit('send-input', {session_id, input_data: {text: text_value}, username: USERNAME})}}>SEND</button>
       </div>
     </div>
   )
@@ -233,7 +235,7 @@ const TEXT_LIVE_INPUTTER = ({session_id}) => {
       <div className="flex-row" style={{alignItems: 'center'}}>
         <div className="nes-field is-inline">
           <label for="inline_field"></label>
-          <input type="text" id="inline_field" className="nes-input is-warning" placeholder="Type here.." onChange={(event) => socket.emit('send-input', {session_id, input_data: {text: event.target.value}})}/>
+          <input type="text" id="inline_field" className="nes-input is-warning" placeholder="Type here.." onChange={(event) => socket.emit('send-input', {session_id, username: USERNAME, input_data: {text: event.target.value}})}/>
         </div>
       </div>
     </div>

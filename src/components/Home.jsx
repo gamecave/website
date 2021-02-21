@@ -61,7 +61,7 @@ const cannedData = [
 
 const Home = (props) => {
   const renderedGameContainers = cannedData.map(({game_id, title, image_url}) => (
-    <div key={game_id} className="nes-container  with-title flex-center" style={{marginTop:'30px', width: '24%', height: '22vw', minWidth: '120px'}} onClick={() => changePage(props.history, `/game/${game_id}`)}>
+    <div key={game_id} className="nes-container  with-title" style={{marginTop:'30px', width: '24%', height: '22vw', minWidth: '120px'}} onClick={() => changePage(props.history, `/game/${game_id}`)}>
       <p className="title nes-text is-error">{title}</p>
       <img src={image_url} style={{width:'auto', height: 'auto', maxWidth: '100%', maxHeight: '100%'}} alt={`Thumbnail of ${title}`}/>
     </div>
@@ -73,7 +73,7 @@ const Home = (props) => {
       <div className="flex-row">
         <button type="button" className="nes-btn is-primary" onClick={() => changePage(props.history, '/play')}>Join a game</button>
         <button type="button" className="nes-btn" onClick={() => changePage(props.history, '/developers')}>Developers</button>
-        <button type="button" className="nes-btn" onClick={() => changePage(props.history, 'https://github.com/gamecave')}>Contribute</button>
+        <a className="nes-btn" href="https://github.com/gamecave">Contribute</a>
       </div>
 
       <div className="nes-container  with-title" style={{marginTop:'30px'}}>

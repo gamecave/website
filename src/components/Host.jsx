@@ -54,8 +54,8 @@ const Host = (props) => {
   }, []);
 
   return (
-    <div>
-      <Unity unityContext={unityContext} />
+    <div className="flex-center">
+      <Unity unityContext={unityContext} style={{height: '100vh'}}/>
       <button onClick={() => {socket.emit('change-input', {input_type: 'text-submit', session_id})}}> Click to use text sub input </button>
       <button onClick={() => {socket.emit('change-input', {input_type: 'wasds', session_id})}}> Click to use wasds</button>
       <button onClick={() => {socket.emit('change-input', {input_type: 'text-live', session_id})}}> Click to use text live</button>

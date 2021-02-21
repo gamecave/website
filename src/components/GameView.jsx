@@ -11,13 +11,14 @@ const GameView = () => {
       if (stream.type === 'ScreenShare') {
         console.warn('FOUND SCREEN SHARE')
         setStream(stream);
-        vref.srcObject = stream;
+        if(vref != null) vref.srcObject = stream;
       }
     });
+
     VoxeetSDK.conference.on('streamUpdated', (participant, stream) => {
       if (stream.type === 'ScreenShare') {
         console.warn('FOUND SCREEN SHARE')
-        vref.srcObject = stream;
+        if(vref != null) vref.srcObject = stream;
         setStream(stream);
       }
     });
@@ -29,9 +30,9 @@ const GameView = () => {
   if (!vstream) return null;
 
   return (
-    <div className="nes-container  with-title" style={{marginTop:'30px'}}>
+    <div className="nes-container  with-title" style={{marginTop:'30px', maxHeight: '50vh', overflow: "hidden"}}>
       <p className="title nes-text is-error">Game stream</p>
-      <video id="video-chat" ref={thing => {vref = thing; if (vstream) thing.srcObject = vstream}} autoPlay="true">
+      <video id="video-chat" ref={thing => {vref = thing; if (vstream && thing) thing.srcObject = vstream}} autoPlay="true" style={{ maxHeight: '50vh'}}> 
       </video>
     </div>
   )
