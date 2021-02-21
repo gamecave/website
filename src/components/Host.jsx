@@ -17,8 +17,12 @@ const unityContext = new UnityContext({
 
 const Host = (props) => {
   const [user_input, setUserInput] = useState({});
-
-  window.GAME_CAVE_GET_USER_INPUT = () => user_input;
+  window.GAME_CAVE_GET_USER_INPUT = () => {return {inputs: Object.keys(user_input).map(elm => {
+    return {
+      id: elm,
+      ...user_input[elm]
+    }
+  })} };
 
   let session_id = props.match.params.session_id
   useEffect(() => {
@@ -26,7 +30,7 @@ const Host = (props) => {
       console.log(event, args);
     });
     socket.on('create-player', (id) => {
-      unityContext.send('GameCaveConnector', 'CreatePlayer', JSON.stringify({id, index: Object.keys(user_input).length}))
+      unityContext.send('GameCaveConnector', 'CreatePlayer', id)
     })
     socket.on('send-input', (input, id) => {
       

@@ -93,12 +93,12 @@ const Play = (props) => {
 
                 <label>Join chat  :</label>
                 <label>
-                  <input type="radio" class="nes-radio" name="chat" onChange={(event) => setJoinChat(true)}/>
+                  <input type="radio" className="nes-radio" name="chat" onChange={(event) => setJoinChat(true)}/>
                   <span>Yes</span>
                 </label>
 
                 <label>
-                  <input type="radio" class="nes-radio" name="chat" onChange={(event) => setJoinChat(false)}/>
+                  <input type="radio" className="nes-radio" name="chat" onChange={(event) => setJoinChat(false)}/>
                   <span>No</span>
                 </label>
               </div>
@@ -107,12 +107,12 @@ const Play = (props) => {
               <div style={{margin: '0 50px'}}>
                 <label>Watch game :</label>
                 <label>
-                  <input type="radio" class="nes-radio" name="answer" onChange={(event) => setSpectateGame(true)}/>
+                  <input type="radio" className="nes-radio" name="answer" onChange={(event) => setSpectateGame(true)}/>
                   <span>Yes</span>
                 </label>
 
                 <label>
-                  <input type="radio" class="nes-radio" name="answer" onChange={(event) => setSpectateGame(false)}/>
+                  <input type="radio" className="nes-radio" name="answer" onChange={(event) => setSpectateGame(false)}/>
                   <span>No</span>
                 </label>
               </div>
@@ -206,15 +206,15 @@ const WASDS_INPUTTER = ({session_id, toggleRerender}) => {
       <div className="flex-row" style={{alignItems: 'center'}}>
         <div className="flex-center">
           <div className="flex-row">
-            <button type="button" class="nes-btn is-primary" onClick={(event) => console.warn(event)}>^</button>
+            <button type="button" className="nes-btn is-primary" onClick={(event) => console.warn(event)}>^</button>
           </div>
           <div className="flex-row">
-            <button type="button" class="nes-btn is-primary" style={{margin: '0 40px'}}>{"<"}</button>
-            <button type="button" class="nes-btn is-primary" style={{margin: '0 40px'}}>{">"}</button>
+            <button type="button" className="nes-btn is-primary" style={{margin: '0 40px'}}>{"<"}</button>
+            <button type="button" className="nes-btn is-primary" style={{margin: '0 40px'}}>{">"}</button>
           </div>
-          <div className="flex-row"><button type="button" class="nes-btn is-primary">V</button></div>
+          <div className="flex-row"><button type="button" className="nes-btn is-primary">V</button></div>
         </div>
-        <button type="button" class="nes-btn is-primary">ACTION</button>
+        <button type="button" className="nes-btn is-primary">ACTION</button>
       </div>
     </div>
   )
@@ -230,7 +230,7 @@ const TEXT_SUBMIT_INPUTTER = ({session_id}) => {
           <label for="inline_field"></label>
           <input type="text" id="inline_field" className="nes-input is-success" placeholder="Type here.." onChange={(event) => setTextValue(event.target.value)}/>
         </div>
-        <button type="button" class="nes-btn is-primary" onClick={() => {console.warn("CLICK", text_value); socket.emit('send-input', {session_id, input_data: {text: text_value}, username: USERNAME})}}>SEND</button>
+        <button type="button" className="nes-btn is-primary" onClick={() => {console.warn("CLICK", text_value); socket.emit('send-input', {session_id, input_data: {text: text_value}, username: USERNAME})}}>SEND</button>
       </div>
     </div>
   )
