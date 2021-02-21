@@ -1,5 +1,5 @@
 import React from 'react';
-const URL = "http://localhost:3000";
+const URL = process.env.NODE_ENV === "production" ? "https://gamecave-server.ue.r.appspot.com/" : "http://localhost:3000";
 
 const cannedData = [
   {

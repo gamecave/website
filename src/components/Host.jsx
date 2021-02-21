@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Unity, { UnityContext } from "react-unity-webgl";
 import VoxeetSDK from '@voxeet/voxeet-web-sdk';
 import { io } from "socket.io-client";
-const URL = "http://localhost:3000";
+const URL = process.env.NODE_ENV === "production" ? "https://gamecave-server.ue.r.appspot.com/" : "http://localhost:3000";
 const socket = io(URL, { autoConnect: false });
 
 // VoxeetSDK.initialize( process.env.REACT_APP_DOLBY_KEY, process.env.REACT_APP_DOLBY_SECRET);
@@ -26,7 +26,7 @@ const Host = (props) => {
       console.log(event, args);
     });
     socket.on('create-player', (id) => {
-      unityContext.send('GameCaveConnector', 'createPlayer', id)
+      unityContext.send('GameCaveConnector', 'CreatePlayer', JSON.stringify({id, index: Object.keys(user_input).length}))
     })
     socket.on('send-input', (input, id) => {
       

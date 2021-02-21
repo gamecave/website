@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 import DolbyChat from './DolbyChat';
 import GameView from './GameView';
-const URL = "http://localhost:3000";
+const URL = process.env.NODE_ENV === "production" ? "https://gamecave-server.ue.r.appspot.com/" : "http://localhost:3000";
 const socket = io(URL, { autoConnect: false });
 console.warn('env', process.env.REACT_APP_DOLBY_KEY, process.env.REACT_APP_DOLBY_SECRET)
 
@@ -35,6 +35,8 @@ const Play = (props) => {
     console.error("BOOM")
 
   }, [])
+
+  console.warn('STATEss', joinChat, spectateGame)
 
   if (error) {
     return (
@@ -75,7 +77,6 @@ const Play = (props) => {
 
   return (
       <div className="flex-container">
-        <button type="button" className="nes-btn is-warning" onClick={props.history.goBack}>{"< Back"}</button>
 
         <h1>Join a game</h1>
         <div className="flex-container" style={{alignItems: 'normal'}}>
@@ -87,33 +88,39 @@ const Play = (props) => {
               <input type="text"  className="nes-input" onChange={(event) => setUsername(event.target.value)}/>
             </div>
             <div className="flex-container" style={{alignItems: 'normal'}}>
+
               <div style={{margin: '0 50px'}}>
+
+                <label>Join chat  :</label>
                 <label>
-                <label>Join chat   :</label>
-                  <input type="radio" class="nes-radio" name="joinchat" checked onChange={(event) => setJoinChat(event.target.value)}/>
+                  <input type="radio" class="nes-radio" name="chat" onChange={(event) => setJoinChat(true)}/>
                   <span>Yes</span>
                 </label>
+
                 <label>
-                  <input type="radio" class="nes-radio" name="joinchat" onChange={(event) => setJoinChat(event.target.value)}/>
+                  <input type="radio" class="nes-radio" name="chat" onChange={(event) => setJoinChat(false)}/>
                   <span>No</span>
                 </label>
               </div>
 
+
               <div style={{margin: '0 50px'}}>
+                <label>Watch game :</label>
                 <label>
-                <label>Watch Game  :</label>
-                  <input type="radio" class="nes-radio" name="spectategame" checked onChange={(event) => setSpectateGame(event.target.value)}/>
+                  <input type="radio" class="nes-radio" name="answer" onChange={(event) => setSpectateGame(true)}/>
                   <span>Yes</span>
                 </label>
+
                 <label>
-                  <input type="radio" class="nes-radio" name="spectategame" onChange={(event) => setSpectateGame(event.target.value)}/>
+                  <input type="radio" class="nes-radio" name="answer" onChange={(event) => setSpectateGame(false)}/>
                   <span>No</span>
                 </label>
               </div>
             </div>
           </div>
 
-          <button type="button" className="nes-btn is-primary" onClick={() => handleClick(game_code)}>Join</button>
+          <button type="button" className="nes-btn is-primary" onClick={() => handleClick(game_code)} style={{marginBottom: '20px'}}>Join</button>
+          <button type="button" className="nes-btn is-warning" onClick={props.history.goBack}>{"< Back"}</button>
         </div>
       </div>
   );
