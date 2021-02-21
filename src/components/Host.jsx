@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Unity, { UnityContext } from "react-unity-webgl";
+import VoxeetSDK from '@voxeet/voxeet-web-sdk';
 import { io } from "socket.io-client";
 const URL = "http://localhost:3000";
 const socket = io(URL, { autoConnect: false });
 
+// VoxeetSDK.initialize( process.env.REACT_APP_DOLBY_KEY, process.env.REACT_APP_DOLBY_SECRET);
 
 const unityContext = new UnityContext({
   loaderUrl: "/build/tanksTest.loader.js",
@@ -37,12 +39,18 @@ const Host = (props) => {
     socket.connect();
     socket.emit('host', {session_id: session_id, starting_input: 'wasds'});
     
-    VoxeetSDK.conference.startScreenShare()
-            .then(() => {
-                startScreenShareBtn.disabled = true
-            })
-
-
+    console.warn('props.match.params.session_id', props.match.params.session_id)
+    VoxeetSDK.session.open({ name: 'Host' }).then(()=>
+    VoxeetSDK.conference.create({ alias: props.match.params.session_id }))
+    .then((conference) => VoxeetSDK.conference.join(conference, {}))
+    .then(() => {
+      console.warn('HYPE')
+      VoxeetSDK.conference.startScreenShare()
+      .then(() => {
+          console.warn('recording');
+      })
+    })
+    .catch((e) => console.log('Something wrong happened : ' + e))
   }, []);
 
   return (

@@ -17,6 +17,9 @@ import {
 
 Dotenv.config();
 
+VoxeetSDK.initialize( process.env.REACT_APP_DOLBY_KEY, process.env.REACT_APP_DOLBY_SECRET);
+
+
 function App() {
   return (
     <Router>

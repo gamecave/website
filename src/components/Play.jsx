@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { io } from "socket.io-client";
 
 import DolbyChat from './DolbyChat';
+import GameView from './GameView';
 const URL = "http://localhost:3000";
 const socket = io(URL, { autoConnect: false });
 console.warn('env', process.env.REACT_APP_DOLBY_KEY, process.env.REACT_APP_DOLBY_SECRET)
@@ -63,6 +64,7 @@ const Play = (props) => {
     return (
       <div>
         {joinChat && <DolbyChat session_id={game_code} username={username}/>}
+        {spectateGame && <GameView />}
         {comp}
       </div>
     )
