@@ -30,6 +30,11 @@ const Play = (props) => {
           </div>
           <button type="button" className="nes-btn is-primary" onClick={() => handleClick(game_code)}>Join</button>
         </div>
+
+        <div>
+          <button onClick={() => {socket.emit('send-input', {input_data: {forward: true}, session_id: game_code})}}> Click to go forward </button>
+          <button onClick={() => {socket.emit('send-input', {input_data: {backward: true}, session_id: game_code})}}> Click backward</button>
+        </div>
       </div>
   );
 }

@@ -54,9 +54,9 @@ const cannedData = [
 
 
 
-const handleClick = (history) => {
+const handleClick = (history, game_id) => {
   console.warn('here')
-  fetch(`${URL}/create/maze`).then(r => {console.warn(r); return r.json()}).then(resp => {
+  fetch(`${URL}/create/${game_id}`).then(r => {console.warn(r); return r.json()}).then(resp => {
     console.warn(resp);
     history.push(`/host/${resp.session_id}`);
   }).catch(e => console.warn(e))
@@ -75,7 +75,7 @@ const Game = (props) => {
       <h3>{current.description}</h3>
       <img src={current.image_url} alt="thumbnail"></img>
       <button type="button" className="nes-btn is-success"></button>
-      <button type="button" className="nes-btn is-success" onClick={() => handleClick(props.history)}>Host a game</button>
+      <button type="button" className="nes-btn is-success" onClick={() => handleClick(props.history, props.match.params.gameId)}>Host a game</button>
     </div>
   );
 }

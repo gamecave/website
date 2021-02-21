@@ -20,7 +20,8 @@ const Host = (props) => {
   console.warn(props)
   return (
     <div>
-      <button> Click to host </button>
+      <button onClick={() => {socket.emit('change-input', {input_type: 'text', session_id})}}> Click to use text input </button>
+      <button onClick={() => {socket.emit('change-input', {input_type: 'wasds', session_id})}}> Click to use wasds</button>
     </div>
   );
 }
