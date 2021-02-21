@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import VoxeetSDK from '@voxeet/voxeet-web-sdk';
 import { io } from "socket.io-client";
 const URL = "http://localhost:3000";
 const socket = io(URL, { autoConnect: false });
+console.warn('env', process.env.REACT_APP_DOLBY_KEY, process.env.REACT_APP_DOLBY_SECRET)
 
+VoxeetSDK.initialize(process.env.REACT_APP_DOLBY_KEY, process.env.REACT_APP_DOLBY_SECRET)
 
 const handleClick = (session_id) => {
   socket.emit('join', {session_id});
@@ -12,8 +15,11 @@ let SESSION_ID = "";
 
 const Play = (props) => {
   const [game_code, setGameCode] = useState("");
+  const [username, setUsername] = useState("default");
+  const [notConnected, setNotConnected] = useState(true);
   const [input_type, setInputType] = useState(null)
   const [error, setError] = useState(false);
+  const [videoNodes, setVideoNodes] = useState([]);
 
   SESSION_ID = game_code;
   useEffect(() => {
@@ -24,6 +30,18 @@ const Play = (props) => {
     socket.on('error', (error) => {setError(error)});
     socket.connect();
     console.error("BOOM")
+    
+    VoxeetSDK.conference.on('streamUpdated', (participant, stream) => {
+      if (stream.type === 'ScreenShare') return;
+      if (stream.getVideoTracks().length) {
+        console.warn(participant)
+        // addVideoNode(participant, stream);
+        // setVideoNodes([...videoNodes, ])
+      } else {
+        // removeVideoNode(participant);
+      }
+    });
+
   }, [])
 
   if (error) {
@@ -39,6 +57,17 @@ const Play = (props) => {
   }
 
   if (input_type) {
+    if (notConnected) {
+      setNotConnected(false)
+      VoxeetSDK.session.open({ name: username }).then(() => {
+        VoxeetSDK.conference.create({ alias: game_code })
+              .then((conference) => VoxeetSDK.conference.join(conference, {}))
+              .then(() => VoxeetSDK.conference.startVideo(VoxeetSDK.session.participant))
+              
+              .catch((e) => console.log('Something wrong happened : ' + e))
+      });
+    }
+    
     switch (input_type) {
       case 'wasds':
         return <WASDS_INPUTTER session_id={game_code}/>;
@@ -60,6 +89,7 @@ const Play = (props) => {
           <div className="nes-field">
             <label>Game code:</label>
             <input type="text" id="name_field" className="nes-input" onChange={(event) => setGameCode(event.target.value)}/>
+            <input type="text"  className="nes-input" onChange={(event) => setUsername(event.target.value)}/>
           </div>
           <button type="button" className="nes-btn is-primary" onClick={() => handleClick(game_code)}>Join</button>
         </div>
