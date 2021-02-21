@@ -33,8 +33,7 @@ const Host = (props) => {
       if (!user_input[id]) user_input[id] = {}
       let old = {...user_input[id]};
       let combined = {...old, ...input}
-      setUserInput({...user_input, [id]: combined});
-  
+      setUserInput((prevState) => ({ ...prevState, [id]: combined}));
     })
     socket.connect();
     socket.emit('host', {session_id: session_id, starting_input: 'wasds'});
@@ -52,6 +51,8 @@ const Host = (props) => {
     })
     .catch((e) => console.log('Something wrong happened : ' + e))
   }, []);
+
+  console.warn('BOOM', user_input);
 
   return (
     <div className="flex-center">

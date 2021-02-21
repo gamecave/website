@@ -127,6 +127,7 @@ let wasds_last_state = {
 }
 
 const wasdsHandlerAdd = (event) => {
+  console.warn(event.key)
   let new_state = {...wasds_last_state};
   switch (event.key) {
     case 'w':
@@ -151,7 +152,7 @@ const wasdsHandlerAdd = (event) => {
   if (new_state.vertical !== wasds_last_state.vertical || new_state.horizontal !== wasds_last_state.horizontal || new_state.action !== wasds_last_state.action) {
     socket.emit('send-input', {input_data: new_state, session_id: SESSION_ID, username: USERNAME})
   }
-
+  
   wasds_last_state = new_state;
   console.warn(wasds_last_state)
 }
