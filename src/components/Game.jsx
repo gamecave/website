@@ -1,9 +1,5 @@
 import React from 'react';
-import '../App.css'
-
-const changePage = (history, path) => {
-  history.push(path);
-}
+const URL = "http://localhost:3000";
 
 const cannedData = [
   {
@@ -58,35 +54,30 @@ const cannedData = [
 
 
 
+const handleClick = (history) => {
+  console.warn('here')
+  fetch(`${URL}/create/maze`).then(r => {console.warn(r); return r.json()}).then(resp => {
+    console.warn(resp);
+    history.push('/host/6969');
+  }).catch(e => console.warn(e))
+}
 
-const Home = (props) => {
-  const renderedGameContainers = cannedData.map(({game_id, title, image_url}) => (
-    <div className="nes-container  with-title flex-center" style={{marginTop:'30px', width: '24%', height: '22vw', minWidth: '120px'}} onClick={() => changePage(props.history, `/game/${game_id}`)}>
-      <p className="title nes-text is-error">{title}</p>
-      <img src={image_url} style={{width:'auto', height: 'auto', maxWidth: '100%', maxHeight: '100%'}} alt={`Thumbnail of ${title}`}/>
-    </div>
-  ));
+const Game = (props) => {
+  console.warn(props)
+  const possibleGames = cannedData.filter(({game_id}) => game_id === props.match.params.gameId)
+  if (possibleGames.length < 1) return (<div>No Game with this id</div>)
+
+  const current = possibleGames[0];
 
   return (
     <div className="flex-container">
-      <h1>Game Cave</h1>
-      <div className="flex-row">
-        <button type="button" className="nes-btn is-primary" onClick={() => changePage(props.history, '/play')}>Join a game</button>
-        <button type="button" className="nes-btn" onClick={() => changePage(props.history, '/developers')}>Developers</button>
-        <button type="button" className="nes-btn" onClick={() => changePage(props.history, 'https://github.com/gamecave')}>Contribute</button>
-      </div>
-
-      <div className="nes-container  with-title" style={{marginTop:'30px'}}>
-        <p className="title nes-text is-error">How to host a game</p>
-        <span>To host a game, select a game in our library. On the next page, you will see a </span> 
-        <button type="button" className="nes-btn is-success"> Host game </button> 
-        <span> button.</span>
-      </div>
-      <div className="flex-row">
-        {renderedGameContainers}
-      </div>
+      <h1>{current.title}</h1>
+      <h3>{current.description}</h3>
+      <img src={current.image_url} alt="thumbnail"></img>
+      <button type="button" className="nes-btn is-success"></button>
+      <button type="button" className="nes-btn is-success" onClick={() => handleClick(props.history)}>Host a game</button>
     </div>
   );
 }
 
-export default Home;
+export default Game;
