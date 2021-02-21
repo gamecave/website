@@ -20,8 +20,9 @@ const Host = (props) => {
   console.warn(props)
   return (
     <div>
-      <button onClick={() => {socket.emit('change-input', {input_type: 'text', session_id})}}> Click to use text input </button>
+      <button onClick={() => {socket.emit('change-input', {input_type: 'text-submit', session_id})}}> Click to use text sub input </button>
       <button onClick={() => {socket.emit('change-input', {input_type: 'wasds', session_id})}}> Click to use wasds</button>
+      <button onClick={() => {socket.emit('change-input', {input_type: 'text-live', session_id})}}> Click to use text live</button>
     </div>
   );
 }
