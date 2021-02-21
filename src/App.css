@@ -5,6 +5,7 @@
   justify-content: space-around;
   flex-wrap: wrap;
   align-items: flex-start;
+
 }
 
 .flex-row button {
@@ -15,6 +16,7 @@
   margin: 20px;
   display: flex;
   flex-direction: column;
+
 }
 
 .flex-center {

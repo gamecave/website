@@ -36,7 +36,13 @@ const Host = (props) => {
     })
     socket.connect();
     socket.emit('host', {session_id: session_id, starting_input: 'wasds'});
- 
+    
+    VoxeetSDK.conference.startScreenShare()
+            .then(() => {
+                startScreenShareBtn.disabled = true
+            })
+
+
   }, []);
 
   return (
